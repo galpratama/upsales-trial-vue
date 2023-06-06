@@ -65,8 +65,8 @@ const props = defineProps<{
             />
             Products
           </RouterLink>
-          <a
-            href="@/pages/dashboard/transactions/index-no-data.html"
+          <RouterLink
+            :to="{ name: 'dashboard-transaction-index' }"
             class="group dashboard-link"
             :class="{ 'is-active': props.activeMenu === 'transaction' }"
           >
@@ -76,7 +76,7 @@ const props = defineProps<{
               alt=""
             />
             Transactions
-          </a>
+          </RouterLink>
           <a href="#" class="group dashboard-link">
             <img
               src="@/assets/svg/ic-people.svg"
