@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const props = defineProps<{
-  isDashboard: boolean
+  isDashboard?: boolean
 }>()
 </script>
 

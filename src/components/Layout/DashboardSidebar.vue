@@ -53,8 +53,8 @@ const props = defineProps<{
             />
             Overview
           </RouterLink>
-          <a
-            href="@/pages/dashboard/products/"
+          <RouterLink
+            :to="{ name: 'dashboard-product-index' }"
             class="group dashboard-link"
             :class="{ 'is-active': props.activeMenu === 'product' }"
           >
@@ -64,7 +64,7 @@ const props = defineProps<{
               alt=""
             />
             Products
-          </a>
+          </RouterLink>
           <a
             href="@/pages/dashboard/transactions/index-no-data.html"
             class="group dashboard-link"
