@@ -1,15 +1,26 @@
 <script setup lang="ts">
+import { useSidebarStore } from '@/stores/sidebar'
+
+const sidebarStore = useSidebarStore()
+
 const props = defineProps<{
-  activeMenu: string
+  activeMenu?: string
 }>()
 </script>
+
 <template>
   <!-- START: Sidebar -->
   <aside
-    class="bg-white lg:float-left w-full max-w-xs lg:max-w-max px-[30px] pt-7 lg:pt-[50px] pb-[70px] hidden lg:flex flex-col h-full min-h-screen lg:max-h-full absolute lg:static lg:left-0 z-50 shadow-md lg:shadow-none overflow-y-auto lg:overflow-y-visible max-h-screen"
+    :class="{ hidden: sidebarStore.isToggled }"
+    class="bg-white lg:float-left w-full max-w-xs lg:max-w-max px-[30px] pt-7 lg:pt-[50px] pb-[70px] lg:flex flex-col h-full min-h-screen lg:max-h-full absolute lg:static lg:left-0 z-50 shadow-md lg:shadow-none overflow-y-auto lg:overflow-y-visible max-h-screen"
   >
     <!-- X icon -->
-    <a href="javascript:void(0)" class="block w-6 h-6 mb-4 ml-auto lg:hidden" id="navbarToggler">
+    <a
+      href="javascript:void(0)"
+      class="block w-6 h-6 mb-4 ml-auto lg:hidden"
+      id="navbarToggler"
+      @click="sidebarStore.toggle()"
+    >
       <svg
         fill="none"
         stroke="currentColor"
@@ -65,11 +76,7 @@ const props = defineProps<{
             />
             Products
           </RouterLink>
-          <RouterLink
-            :to="{ name: 'dashboard-transaction-index' }"
-            class="group dashboard-link"
-            :class="{ 'is-active': props.activeMenu === 'transaction' }"
-          >
+          <RouterLink :to="{ name: 'dashboard-transaction-index' }" class="group dashboard-link">
             <img
               src="@/assets/svg/ic-cart.svg"
               class="transition-all group-hover:filter-white group-[.is-active]:filter-white"
@@ -149,21 +156,23 @@ const props = defineProps<{
             />
             Settings
           </a>
-          <a href="#" class="group dashboard-link">
+          <RouterLink :to="{ name: 'home' }" class="group dashboard-link">
             <img
               src="@/assets/svg/ic-logout.svg"
               class="transition-all group-hover:filter-white group-[.is-active]:filter-white"
               alt=""
             />
             Logout
-          </a>
+          </RouterLink>
         </div>
       </section>
     </div>
   </aside>
   <div
     id="backdropDrawer"
-    class="fixed z-40 hidden w-screen h-screen bg-gray-900 bg-opacity-50"
+    @click="sidebarStore.toggle()"
+    :class="{ hidden: sidebarStore.isToggled }"
+    class="fixed z-40 w-screen h-screen bg-gray-900 bg-opacity-50"
   ></div>
   <!-- END: Sidebar -->
 </template>

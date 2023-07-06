@@ -119,7 +119,7 @@ const options = {
     </p>
 
     <div class="w-full h-[220px]">
-      <Line :data="data" :options="options" id="yourGrowthChart" />
+      <Line id="yourGrowthChart" :data="data" :options="options" />
     </div>
   </div>
   <!-- END: Your Growth -->

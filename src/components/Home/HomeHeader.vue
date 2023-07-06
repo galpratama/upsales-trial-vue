@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import HomeNavbar from '@/components/Layout/HomeNavbar.vue';
+import HomeNavbar from '@/components/Layout/HomeNavbar.vue'
 </script>
 
 <template>
   <section class="relative pb-[50px] bg-dark max-h-[955px]">
     <HomeNavbar />
-
     <header class="container flex flex-col items-center mt-[70px] relative z-20">
       <h1
         class="text-center text-light font-bold text-4xl md:text-[55px] leading-tight md:leading-[80px] mb-6"
@@ -30,7 +29,7 @@ import HomeNavbar from '@/components/Layout/HomeNavbar.vue';
         </li>
       </ul>
       <div class="flex gap-4 md:flex-row flex-col justify-center w-full mb-[60px]">
-        <RouterLink :to="{name: 'signup'}" class="btn-primary">Get Started</RouterLink>
+        <RouterLink :to="{ name: 'signup' }" class="btn-primary">Get Started</RouterLink>
         <a href="#" class="btn-white">Ask Demo</a>
       </div>
 
@@ -41,10 +40,6 @@ import HomeNavbar from '@/components/Layout/HomeNavbar.vue';
       />
     </header>
 
-    <!-- Ornament Option 1 -->
-    <!-- <img src="@/assets/svg/dark-background.svg" class="absolute inset-x-0 top-0 w-full -z-10" alt=""> -->
-
-    <!-- Ornament Option 2 -->
     <img src="@/assets/svg/half-circular-ornament.svg" class="absolute bottom-0 z-0" alt="" />
     <div class="right-triangle"></div>
   </section>

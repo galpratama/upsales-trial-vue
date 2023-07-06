@@ -8,44 +8,37 @@ import HomeNavbar from '@/components/Layout/HomeNavbar.vue'
 import SignUpHeader from '@/components/Layout/SignUpHeader.vue'
 
 import { useUserStore } from '@/stores/user'
-import { useCategoryStore } from '@/stores/category'
 
-import type Register from '@/types/register'
+import type Login from '@/types/login'
 
 const API_URL = import.meta.env.VITE_API_URL
 
 const router = useRouter()
-const categoryStore = useCategoryStore()
 const userStore = useUserStore()
 
 onMounted(() => {
   // Redirect to home page if user already logged in
   if (userStore.isLoggedIn) router.push({ name: 'dashboard' })
-
-  // Fetch categories
-  categoryStore.fetchCategories()
 })
 
-const form = ref<Register>({
-  name: '',
+const form = ref<Login>({
   email: '',
-  password: '',
-  category_id: null
+  password: ''
 })
 
-async function register(): Promise<void> {
+async function login(): Promise<void> {
   try {
     // Send request to API
-    const response = await axios.post(API_URL + '/register', form.value)
+    const { data } = await axios.post(API_URL + '/login', form.value)
 
     // Save token to local storage
-    localStorage.setItem('access_token', response.data.result.access_token)
+    localStorage.setItem('access_token', data.result.access_token)
 
     // Fetch user data
     userStore.fetchUser()
 
-    // Redirect to home page
-    router.push({ name: 'add-product' })
+    // Redirect to dashboard
+    router.push({ name: 'dashboard' })
   } catch (error) {
     console.error(error)
   }
@@ -62,26 +55,14 @@ async function register(): Promise<void> {
           <SignUpHeader />
 
           <form
-            @submit.prevent="register"
+            @submit.prevent="login"
             action=""
             method="POST"
             class="bg-white rounded-[30px] p-6 md:max-w-[435px] mx-auto w-full flex flex-col shadow-sm"
           >
-            <p class="text-dark font-bold text-[26px] mb-5">Sign Up</p>
+            <p class="text-dark font-bold text-[26px] mb-5">Sign In</p>
 
             <div class="flex flex-col gap-[18px]">
-              <!-- form group -->
-              <div class="flex flex-col gap-2">
-                <label for="" class="text-base font-medium text-dark"> Company name </label>
-                <input
-                  type="text"
-                  name="name"
-                  v-model="form.name"
-                  placeholder="Write your company name"
-                  class="px-5 py-4 text-base bg-transparent border-2 rounded-full outline-none border-borderLight focus:border-primary placeholder:text-placeholderText text-dark"
-                  required
-                />
-              </div>
               <!-- form group -->
               <div class="flex flex-col gap-2">
                 <label for="" class="text-base font-medium text-dark"> Email address </label>
@@ -107,26 +88,8 @@ async function register(): Promise<void> {
                   required
                 />
               </div>
-              <!-- form group -->
-              <div class="flex flex-col gap-2">
-                <label for="" class="text-base font-medium text-dark"> Category </label>
-                <select
-                  name="category_id"
-                  v-model="form.category_id"
-                  class="bg-transparent px-5 py-4 text-base border-2 rounded-full outline-none appearance-none border-borderLight focus:border-primary placeholder:text-placeholderText bg-[url('@/assets/svg/ic-chevron-down.svg')] bg-[calc(100%-20px)_center] bg-no-repeat invalid:required:text-placeholderText"
-                  required
-                >
-                  <option
-                    v-for="category in categoryStore.categories"
-                    :key="category.id"
-                    :value="category.id"
-                  >
-                    {{ category.name }}
-                  </option>
-                </select>
-              </div>
             </div>
-            <button class="btn-primary mt-[30px]" type="submit">Continue Create Account</button>
+            <button class="btn-primary mt-[30px]" type="submit">Sign In</button>
           </form>
         </div>
       </div>
